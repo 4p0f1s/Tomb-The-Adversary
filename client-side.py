@@ -1,5 +1,17 @@
-import socket
-import sys
+import socket,sys
+from modules.banner import *
+from modules.options import *
+from modules.game import *
+from modules.inter import *
+
+
+
+##### Variables
+playername = pn()
+Turn = True
+fin = False
+ipadv = 0
+#####
 
 # Create a TCP/IP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -11,22 +23,43 @@ sock.connect(server_address)
 
 try:
 
-    # Send data
-    #message = b'This is the message.  It will be repeated.'
-    while True:
-        message = bytes(input(),'UTF-8')
-        print('sending {!r}'.format(message))
-        sock.sendall(message)
+    wel()
 
-        # Look for the response
-        amount_received = 0
-        amount_expected = len(message)
+    ready()
+    ip = gen()
+    ipadv = sock.recv(16)
 
-        while amount_received < amount_expected:
-            data = sock.recv(16)
-            amount_received += len(data)
-            print('received {!r}'.format(data))
+    sock.sendall(bytes(str(ip),"UTF-8"))
+
+    #################
+
+    while fin != True:
+
+        while Turn != False:
+            iprec = interf(ip,playername)
+            fin = comp(int(ipadv),iprec)
+            if fin == True:
+                sock.sendall(b"Lost")
+                sock.close()
+                exit()
+            else:
+                sock.sendall(b"Your Turn!")
+            Turn = False
+
+        data = sock.recv(16)
+        if data != b"Your Turn!":
+            sock.close()
+            cl()
+            print("You lost!!")
+            exit()
+        else:
+            print("Your Turn!")
+            Turn = True
+
+
+
+####################################################################################################
+
 
 finally:
-    print('closing socket')
     sock.close()
