@@ -1,3 +1,7 @@
+[![Tested versions](https://img.shields.io/badge/tested%20versions-0.1-blue)](https://github.com/4p0f1s/Tomb-The-Adversary/releases/tag/TTA-v0.1)
+![Platform](https://img.shields.io/badge/platform-windos%20%7C%20macos%20%7C%20linux-lightgrey)
+![Python v](https://img.shields.io/badge/python-%3E%3D3.0-blue)
+
 # Tomb-The-Adversary
 
 Tomb The Adversary (TTA) is a 1vs1 game similar to Battleship, but with the difference that instead of trying to find the ships, we try to find the IP of the adversary, to knock it down.
